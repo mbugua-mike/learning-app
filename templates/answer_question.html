@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Answer Question - Educational Platform{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Question Details</h3>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ question.title }}</h5>
+                <p class="card-text">{{ question.content }}</p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        Asked by: {{ question.author.name }} on {{ question.date_posted.strftime('%Y-%m-%d') }}
+                    </small>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Your Answer</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Answer</label>
+                        <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Submit Answer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

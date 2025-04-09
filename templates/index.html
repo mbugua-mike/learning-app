@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Educational Platform{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Welcome to the Educational Platform</h1>
+    <p class="lead">A platform for lecturers and students to interact through video uploads, document sharing, and Q&A.</p>
+    
+    {% if not current_user.is_authenticated %}
+        <div class="mt-4">
+            <a href="{{ url_for('login') }}" class="btn btn-primary me-2">Login</a>
+            <a href="{{ url_for('register') }}" class="btn btn-outline-primary">Register</a>
+        </div>
+    {% else %}
+        <div class="mt-4">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+    {% endif %}
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">For Lecturers</h5>
+                <p class="card-text">Upload educational videos and documents, and answer student questions.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">For Students</h5>
+                <p class="card-text">Access educational content and ask questions to lecturers.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Interactive Learning</h5>
+                <p class="card-text">Engage in meaningful discussions through our Q&A system.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

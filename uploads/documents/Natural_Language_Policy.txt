@@ -1,0 +1,3 @@
+Natural Language Policy Query:
+What it does: Allow users or admins to ask questions in plain English like "What are the password requirements?" or "Can I access the system on weekends?" and the AI would interpret the query and provide an answer based on the currently active and applicable policies.
+Benefit: Improves user understanding and reduces the need for users to manually read through potentially complex policy documents/settings.

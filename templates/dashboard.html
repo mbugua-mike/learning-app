@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Educational Platform{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ current_user.name }}!</h2>
+
+<div class="row mt-4">
+    <div class="col-md-8">
+        <h3>Educational Content</h3>
+        {% if contents %}
+            {% for content in contents %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ content.title }}</h5>
+                        <p class="card-text">{{ content.description }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Uploaded by: {{ content.lecturer.name }} on {{ content.upload_date.strftime('%Y-%m-%d') }}
+                            </small>
+                        </p>
+                        {% if content.content_type == 'video' %}
+                            <video width="100%" controls>
+                                <source src="{{ url_for('uploaded_file', content_type='video', filename=content.filename) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% else %}
+                            <a href="{{ url_for('uploaded_file', content_type='document', filename=content.filename) }}" class="btn btn-primary" target="_blank">
+                                View Document
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No content available yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <h3>Questions & Answers</h3>
+        {% if current_user.role == 'student' %}
+            <a href="{{ url_for('ask_question') }}" class="btn btn-primary mb-3">Ask a Question</a>
+        {% endif %}
+        
+        {% if questions %}
+            {% for question in questions %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ question.title }}</h5>
+                        <p class="card-text">{{ question.content }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Asked by: {{ question.author.name }} on {{ question.date_posted.strftime('%Y-%m-%d') }}
+                            </small>
+                        </p>
+                        
+                        {% if question.answers %}
+                            <div class="mt-3">
+                                <h6>Answers:</h6>
+                                {% for answer in question.answers %}
+                                    <div class="card mb-2">
+                                        <div class="card-body">
+                                            <p class="card-text">{{ answer.content }}</p>
+                                            <p class="card-text">
+                                                <small class="text-muted">
+                                                    Answered by: {{ answer.author.name }} on {{ answer.date_posted.strftime('%Y-%m-%d') }}
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {% if current_user.role == 'lecturer' and not question.answers %}
+                            <a href="{{ url_for('answer_question', question_id=question.id) }}" class="btn btn-outline-primary btn-sm">
+                                Answer Question
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No questions available yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 
